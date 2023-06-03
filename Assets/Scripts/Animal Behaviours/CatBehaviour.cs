@@ -9,6 +9,7 @@ public class CatBehaviour : MonoBehaviour
     int currentWP = 0;
 
     SpriteRenderer catSpriteRenderer;
+    AudioSource audioSource;
 
     public float speed = 1.0f;
 
@@ -18,8 +19,10 @@ public class CatBehaviour : MonoBehaviour
         WP2 = GameObject.Find("WP03");
         waypoints.Add(WP1);
         waypoints.Add(WP2);
-        catSpriteRenderer =  GetComponent<SpriteRenderer>();
+        catSpriteRenderer = GetComponent<SpriteRenderer>();
         catSpriteRenderer.flipX = false;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,12 +32,14 @@ public class CatBehaviour : MonoBehaviour
         {
             catSpriteRenderer.flipX = true;
             currentWP++;
+            audioSource.Play();
         }
 
         if (currentWP >= waypoints.Count)
         {
             catSpriteRenderer.flipX = false;
             currentWP = 0;
+            audioSource.Play();
         }
 
             transform.position = Vector2.MoveTowards(transform.position, waypoints[currentWP].transform.position, 0.01f);
